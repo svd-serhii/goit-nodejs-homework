@@ -13,7 +13,7 @@ const getContactById = async (req, res) => {
   const { id } = req.params;
   const result = await Contact.findById(id);
   if (!result) {
-    throw HttpError(404, `Book with ${id} not found`);
+    throw HttpError(404, `Contact with ${id} not found`);
   }
   res.json(result);
 };
@@ -27,7 +27,7 @@ const removeContact = async (req, res) => {
   const { id } = req.params;
   const result = await Contact.findByIdAndDelete(id);
   if (!result) {
-    throw HttpError(404, `Book with ${id} not found`);
+    throw HttpError(404, `Contact with ${id} not found`);
   }
 
   res.json({
@@ -39,7 +39,7 @@ const updateContact = async (req, res) => {
   const { id } = req.params;
   const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
   if (!result) {
-    throw HttpError(404, `Book with ${id} not found`);
+    throw HttpError(404, `Contact with ${id} not found`);
   }
   res.json(result);
 };
@@ -48,7 +48,7 @@ const updateFavoriteContact = async (req, res) => {
   const { id } = req.params;
   const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
   if (!result) {
-    throw HttpError(404, `Book with ${id} not found`);
+    throw HttpError(404, `Contact with ${id} not found`);
   }
   res.json(result);
 };
