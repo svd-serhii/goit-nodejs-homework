@@ -39,14 +39,22 @@ const addSchema = Joi.object({
     "string.empty": `"phone" cannot be empty`,
     "string.base": `"phone" must be string`,
   }),
-  favorite: Joi.boolean().required(),
+  favorite: Joi.boolean(),
 });
 
-const updateFavoriteSchema = Joi.object({
-  favorite: Joi.boolean().required(),
+const updateSchema = Joi.object({
+  name: Joi.string(),
+  phone: Joi.string(),
+  email: Joi.string().email(),
 });
 
-const schemas = { addSchema, updateFavoriteSchema };
+const updateStatusSchema = Joi.object({
+  favorite: Joi.boolean().required().messages({
+    "any.required": `"missing field favorite"`,
+  }),
+});
+
+const schemas = { addSchema, updateSchema, updateStatusSchema };
 
 const Contact = model("contact", contactSchema);
 
