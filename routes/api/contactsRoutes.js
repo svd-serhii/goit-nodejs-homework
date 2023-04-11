@@ -4,11 +4,11 @@ const ctrl = require("../../controllers/contactsControllers");
 
 const { validateBody } = require("../../utils");
 
-const { schemas } = require("../../models/contactModels");
+const schemas = require("../../utils/validation/contactValidationSchemas");
 
 const router = express.Router();
 
-router.get("/", ctrl.listContacts);
+router.get("/", ctrl.getContacts);
 
 router.get("/:id", ctrl.getContactById);
 
