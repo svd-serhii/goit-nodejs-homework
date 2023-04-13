@@ -38,7 +38,6 @@ const login = async (req, res) => {
   }
 
   const comparePassword = await bcrypt.compare(password, user.password);
-  console.log(comparePassword);
 
   if (!comparePassword) {
     throw HttpError(401, "Email or password is wrong");
@@ -57,7 +56,36 @@ const login = async (req, res) => {
   });
 };
 
+const logout = async (req, res) => {
+  const { _id } = req.user;
+
+  await User.findByIdAndUpdate(_id, { token: "" });
+  res.status(204).json();
+};
+
+const getCurrentUser = async (req, res) => {
+  const { email, subscription } = req.user;
+
+  res.status(200).json({
+    email,
+    subscription,
+  });
+};
+
+const updateSubscriptionUser = async (req, res) => {
+  const { _id } = req.user;
+  const { subscription } = req.body;
+  const result = await User.findByIdAndUpdate(_id, { subscription });
+  if (!result) {
+    throw HttpError(401, "Not authorized");
+  }
+  res.status(200).json(result);
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
+  logout: ctrlWrapper(logout),
+  getCurrentUser: ctrlWrapper(getCurrentUser),
+  updateSubscriptionUser: ctrlWrapper(updateSubscriptionUser),
 };
