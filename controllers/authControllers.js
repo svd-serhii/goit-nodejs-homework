@@ -4,7 +4,7 @@ const gravatar = require("gravatar");
 const fs = require("fs/promises");
 const path = require("path");
 
-const { ctrlWrapper } = require("../utils");
+const { ctrlWrapper, resizeAvatar } = require("../utils");
 
 const { HttpError } = require("../helpers");
 
@@ -92,6 +92,9 @@ const updateSubscriptionUser = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: tmpUpload, filename } = req.file;
+
+  await resizeAvatar(tmpUpload, 250, 250);
+
   const avatarName = `${_id}_${filename}`;
   const resultUpload = path.join(avatarDir, avatarName);
 
